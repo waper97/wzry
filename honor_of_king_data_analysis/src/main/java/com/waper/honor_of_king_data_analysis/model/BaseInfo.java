@@ -30,6 +30,7 @@ public class BaseInfo {
     private Object other;
 
     public BaseInfo(boolean success, String message, Integer status) {
+        this();
         this.success = success;
         this.message = message;
         this.status = status;
@@ -49,7 +50,9 @@ public class BaseInfo {
         this.data = data;
         this.other = other;
     }
-
+    public BaseInfo(){
+        System.out.println("fuck");
+    }
 
 }
 
