@@ -1,7 +1,7 @@
 package com.waper.honor_of_king_data_analysis.controller;
 
 import com.waper.honor_of_king_data_analysis.model.BaseInfo;
-import com.waper.honor_of_king_data_analysis.service.WmMapperingService;
+//import com.waper.honor_of_king_data_analysis.service.WmMapperingService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.usermodel.HSSFWorkbookFactory;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
@@ -19,8 +19,8 @@ import java.util.Map;
  */
 public class BaseController {
 
-    @Autowired
-    private WmMapperingService wmMapperingService;
+//    @Autowired
+//    private WmMapperingService wmMapperingService;
 
     public Object successMessage(){
         return new BaseInfo(true, BaseInfo.SUCCESS_MESSAGE, BaseInfo.SUCCESS_CODE);
@@ -32,14 +32,14 @@ public class BaseController {
 
 
 
-    public Object wmMappering(){
-        // 获取未名数据
-        List<Map<String,Object>> vmCateLog= wmMapperingService.listVmCatelog(null);
-        // 获取学科网数据
-        List<Map<String,Object>> xKCateLogwmMappering = wmMapperingService.listXKCatelog(null);
-
-        return null;
-    }
+//    public Object wmMappering(){
+//        // 获取未名数据
+//        List<Map<String,Object>> vmCateLog= wmMapperingService.listVmCatelog(null);
+//        // 获取学科网数据
+//        List<Map<String,Object>> xKCateLogwmMappering = wmMapperingService.listXKCatelog(null);
+//
+//        return null;
+//    }
 
     public static void main(String[] args) {
         // 设定文档位置
