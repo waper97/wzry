@@ -14,7 +14,7 @@
 
 
 英雄代码
-
+https://pvp.qq.com/web201605/js/herolist.json
 pvp.qq.com/web201605/js/herolist.json
 
 

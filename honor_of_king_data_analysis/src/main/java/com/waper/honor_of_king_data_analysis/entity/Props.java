@@ -1,15 +1,23 @@
 package com.waper.honor_of_king_data_analysis.entity;
 
+import lombok.Data;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  * @ClassName Props
  * @Description TODO
  * @Author wangpeng
  * @Date 2021/6/21 18:26
  */
+@Data
+@Entity
 public class Props {
     /**
      *
      */
+    @Id
     private Long itemId;
     private String itemName;
     private String itemType;

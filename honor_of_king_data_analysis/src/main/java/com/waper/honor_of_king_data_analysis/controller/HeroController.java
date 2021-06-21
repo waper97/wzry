@@ -2,7 +2,10 @@ package com.waper.honor_of_king_data_analysis.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.waper.honor_of_king_data_analysis.entity.Hero;
+import com.waper.honor_of_king_data_analysis.entity.Props;
+import com.waper.honor_of_king_data_analysis.repository.ItemRepository;
 import com.waper.honor_of_king_data_analysis.service.HeroService;
+import com.waper.honor_of_king_data_analysis.service.ItemService;
 import com.waper.honor_of_king_data_analysis.util.AnalysisJsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -27,10 +30,12 @@ public class HeroController extends BaseController {
 
     @Autowired
     private HeroService heroService;
+    @Autowired
+    private ItemService itemService;
 
     @GetMapping("test")
     public  Object test(String filePath){
-        filePath = "\\C:\\Users\\Administrator\\Desktop\\herolist.json";
+        filePath = "C:\\Users\\waper\\Desktop\\herolist.json";
         String jsonStr = "";
         try {
 
@@ -84,10 +89,27 @@ public class HeroController extends BaseController {
        return  successData(heroService.findOne(heroExample));
     }
 
+
+    @GetMapping("saveItems")
+    public Object saveItems(){
+        String jsonStr =  AnalysisJsonUtil.JsonStringToJsonArray();
+        JSONArray jsonArray =  JSONArray.parseArray(jsonStr);
+        List<Props> propsList = JSONArray.parseArray(jsonArray.toString(), Props.class);
+        itemService.saveAll(propsList);
+
+        return successData(itemService.saveAll(propsList));
+    }
+
+//    @GetMapping("listItems")
+//    public Object listItems(Props props){
+//        Example<Props> propsExample = Example.of(props);
+//        return  successData(itemService.findOne(propsExample));
+//    }
+
     @GetMapping("listItems")
-    public Object listItems(){
-       String jsonArray =  AnalysisJsonUtil.JsonStringToJsonArray();
-        return successData(jsonArray);
+    public Object listItems(Props props){
+        Example<Props> propsExample = Example.of(props);
+        return  successData(itemService.findAll(propsExample));
     }
 
 }

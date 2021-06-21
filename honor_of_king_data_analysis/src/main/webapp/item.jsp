@@ -47,26 +47,25 @@
        table.render({
            elem: '#demo'
            ,height: 600
-           ,url: 'http://localhost:8888/waper/api/hero/listHero' //数据接口
+           ,url: 'http://localhost:8080/waper/api/hero/listItems' //数据接口
            ,page: true //开启分页
            ,dataType:"application/json"
            ,toolbar: '#toolbarDemo'
            ,totalRow: true //开启合计行
            ,cols: [[ //表头
                {type: 'checkbox', fixed: 'left'}
-               ,{field: 'ename', title: '英雄id', width:100, sort: true ,align: 'center'}
-               ,{field: 'cname', title: '英雄名称', width:150 ,align: 'center'}
+               ,{field: 'itemId', title: '武器id', width:100, sort: true ,align: 'center'}
+               ,{field: 'itemName', title: '武器名称', width:150 ,align: 'center'}
                , {
                    field: 'cname_image', title: '英雄图片', width: 700, align: 'center', templet: function (t) {
                        return "<div> <img src=\"static/images/hero_picture/"+t.ename+".jpg\" style='height: 150px'></div>"
                    }
                }
-               ,{field: 'title', title: '标题', width:150, sort: true ,align: 'center'}
-               ,{field: 'pay_type', title: '支付类型', width:100 ,align: 'center'}
-               ,{field: 'new_type', title: '类型', width: 80 ,align: 'center'}
-               ,{field: 'hero_type', title: '英雄职业', width: 100, sort: true ,align: 'center'}
-               ,{field: 'hero_type2', title: '英雄职业二', width: 130, sort: true ,align: 'center'}
-               ,{field: 'skin_name', title: '皮肤名称', width: 500 ,align: 'center'}
+               ,{field: 'itemType', title: '武器类型', width:150, sort: true ,align: 'center'}
+               ,{field: 'price', title: '价格', width:100 ,align: 'center'}
+               ,{field: 'totalPrice', title: '总价', width: 80 ,align: 'center'}
+               ,{field: 'des1', title: '描述1', width: 100, sort: true ,align: 'center'}
+               ,{field: 'des2', title: '描述2', width: 130, sort: true ,align: 'center'}
                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
 
            ]]
@@ -91,7 +90,7 @@
                console.log(demoReload)
                //执行重载
                table.reload('testReload', {
-                   url:'http://localhost:8888/waper/api/hero/listHero',
+                   url:'http://localhost:8080/waper/api/hero/listItems',
                    method:'get',
                    page: {
                        curr: 1 //重新从第 1 页开始
