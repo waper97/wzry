@@ -20,7 +20,7 @@ import java.util.Map;
 
 /**
  * @ClassName HeroController
- * @Description TODO
+ * @Description 英雄控制器
  * @Author wangpeng
  * @Date 2020/8/18 10:40
  */
@@ -33,12 +33,16 @@ public class HeroController extends BaseController {
     @Autowired
     private ItemService itemService;
 
+    /**
+     * 根绝json文件获取英雄数据，并保存再数据库里
+     * @param filePath
+     * @return
+     */
     @GetMapping("test")
     public  Object test(String filePath){
         filePath = "C:\\Users\\Administrator\\Desktop\\herolist.json";
         String jsonStr = "";
         try {
-
             File file = new File(filePath);
             FileReader fileReader = new FileReader(file);
             // 读取文件
@@ -64,6 +68,11 @@ public class HeroController extends BaseController {
         }
     }
 
+    /**
+     * 感觉参数查询英雄
+     * @param hero
+     * @return
+     */
     @GetMapping("listHero")
     public Object listHero(Hero hero){
         Example<Hero> heroExample = Example.of(hero);
@@ -75,7 +84,10 @@ public class HeroController extends BaseController {
        return  successData(heroService.findOne(heroExample));
     }
 
-
+    /**
+     * 保存武器列表到数据库
+     * @return
+     */
     @GetMapping("saveItems")
     public Object saveItems(){
         String jsonStr =  AnalysisJsonUtil.JsonStringToJsonArray();
@@ -84,12 +96,11 @@ public class HeroController extends BaseController {
         return successData(itemService.saveAll(propsList));
     }
 
-//    @GetMapping("listItems")
-//    public Object listItems(Props props){
-//        Example<Props> propsExample = Example.of(props);
-//        return  successData(itemService.findOne(propsExample));
-//    }
-
+    /**
+     * 武器列表
+     * @param props
+     * @return
+     */
     @GetMapping("listItems")
     public Object listItems(Props props){
         Example<Props> propsExample = Example.of(props);
