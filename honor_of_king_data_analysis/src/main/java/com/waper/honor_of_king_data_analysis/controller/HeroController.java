@@ -1,22 +1,26 @@
 package com.waper.honor_of_king_data_analysis.controller;
 
+import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.waper.honor_of_king_data_analysis.entity.Hero;
 import com.waper.honor_of_king_data_analysis.entity.Props;
-import com.waper.honor_of_king_data_analysis.repository.ItemRepository;
 import com.waper.honor_of_king_data_analysis.service.HeroService;
 import com.waper.honor_of_king_data_analysis.service.ItemService;
 import com.waper.honor_of_king_data_analysis.util.AnalysisJsonUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.util.StringUtil;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.*;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @ClassName HeroController
@@ -26,13 +30,21 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("waper/api/hero")
+@Slf4j
 public class HeroController extends BaseController {
 
     @Autowired
     private HeroService heroService;
     @Autowired
     private ItemService itemService;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+    @Autowired
+    private RedisTemplate redisTemplate;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
+    final private String HERO_LIST_KEY = "hero:list";
     /**
      * 根绝json文件获取英雄数据，并保存再数据库里
      * @param filePath
@@ -60,7 +72,18 @@ public class HeroController extends BaseController {
             JSONArray jsonArray =  JSONArray.parseArray(jsonStr);
             List<Hero> heroList = JSONArray.parseArray(jsonArray.toString(), Hero.class);
             heroService.saveAll(heroList);
+//            // 创建rabbit管理器
+//            RabbitAdmin rabbitAdmin = new RabbitAdmin(rabbitTemplate.getConnectionFactory());
+//            DirectExchange exchange = new DirectExchange("addhero");
+//            rabbitAdmin.declareExchange(exchange);
+//
+//            // 创建消息队列queue
+//            Queue queue =  new Queue("addhero",true);
+//            Binding binding = BindingBuilder.bind(queue).to(exchange).with("1113");
 
+            rabbitTemplate.convertAndSend("addhero","添加英雄成功!");
+
+            log.info("发送消息成功");
             return successData(jsonStr);
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,8 +98,19 @@ public class HeroController extends BaseController {
      */
     @GetMapping("listHero")
     public Object listHero(Hero hero){
-        Example<Hero> heroExample = Example.of(hero);
-       return  successData(heroService.findAll(heroExample));
+
+       String redisHeroList  = String.valueOf(redisTemplate.opsForValue().get(HERO_LIST_KEY));
+       if (StringUtils.isEmpty(redisHeroList) || redisHeroList == "null") {
+           Example<Hero> heroExample = Example.of(hero);
+           List<Hero> heroList = heroService.findAll(heroExample);
+           if (heroList !=null && heroList.size() > 0) {
+               redisTemplate.opsForValue().set(HERO_LIST_KEY,heroList);
+           }
+           return successData(heroList);
+       }else{
+         return successData(JSONObject.parseArray(redisHeroList,Hero.class));
+       }
+
     }
     @GetMapping("findOne")
     public Object findOne(Hero hero){
