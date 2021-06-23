@@ -17,7 +17,7 @@ public  class AnalysisJsonUtil {
      * @return
      */
     public static String JsonStringToJsonArray() {
-        String filePath = "C:\\Users\\waper\\Desktop\\item.json";
+        String filePath = "C:\\Users\\Administrator\\Desktop\\item.json";
         String jsonStr = "";
         try {
             File file = new File(filePath);
@@ -31,6 +31,7 @@ public  class AnalysisJsonUtil {
             }
             fileReader.close();
             reader.close();
+            System.out.println(jsonStr);
             return jsonStr = sb.toString();
 
         } catch (FileNotFoundException e) {

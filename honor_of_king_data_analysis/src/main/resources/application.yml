@@ -4,6 +4,8 @@ spring:
   jpa:
     # 打印sql
     show-sql: true
+    hibernate:
+      ddl-auto: update
   #mysql
 #  mysql:
 #    datasource:
@@ -34,21 +36,15 @@ spring:
   datasource:
     username: sa
     # 数据库连接密码,默认为空,需要在 SQL 脚本内使用 SQL 语句设置
-    data-password:
-
-    # 使用 H2 内存模式的数据库连接方式
+    password:
     # url: jdbc:h2:mem:hedis
 
     # 项目启动该自动创建数据库, ~表示数据库创建在用户目录下
     url: jdbc:h2:file:~/h2DB
 
     driver-class-name: org.h2.Driver
-    # 自动初始化建表
-    initialization-mode: always
     # SQL 建表自动执行脚本
 #    schema: classpath:schema.sql
-    # SQL
-#    data: classpath:data.sql
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

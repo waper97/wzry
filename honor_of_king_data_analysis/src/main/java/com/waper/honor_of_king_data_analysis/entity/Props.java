@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * @ClassName Props
@@ -13,7 +14,7 @@ import javax.persistence.Id;
  */
 @Data
 @Entity
-public class Props {
+public class Props implements Serializable {
     /**
      *
      */

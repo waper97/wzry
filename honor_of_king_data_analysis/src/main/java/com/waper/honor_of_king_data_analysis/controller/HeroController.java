@@ -35,7 +35,7 @@ public class HeroController extends BaseController {
 
     @GetMapping("test")
     public  Object test(String filePath){
-        filePath = "C:\\Users\\waper\\Desktop\\herolist.json";
+        filePath = "C:\\Users\\Administrator\\Desktop\\herolist.json";
         String jsonStr = "";
         try {
 
@@ -52,22 +52,8 @@ public class HeroController extends BaseController {
             reader.close();
             jsonStr = sb.toString();
 
-//            System.out.println(jsonStr);
-
-            Map<String,Object> paramMap = new HashMap<>();
-            paramMap.put("name","cname");
-            paramMap.put("title","title");
-            paramMap.put("hero_type","hero_type");
-            paramMap.put("new_type","new_type");
-            paramMap.put("id","id");
-            paramMap.put("data",jsonStr);
-
-
-
-
-
-
-           JSONArray jsonArray =  JSONArray.parseArray(jsonStr);
+            // json数组转数组
+            JSONArray jsonArray =  JSONArray.parseArray(jsonStr);
             List<Hero> heroList = JSONArray.parseArray(jsonArray.toString(), Hero.class);
             heroService.saveAll(heroList);
 
@@ -95,8 +81,6 @@ public class HeroController extends BaseController {
         String jsonStr =  AnalysisJsonUtil.JsonStringToJsonArray();
         JSONArray jsonArray =  JSONArray.parseArray(jsonStr);
         List<Props> propsList = JSONArray.parseArray(jsonArray.toString(), Props.class);
-        itemService.saveAll(propsList);
-
         return successData(itemService.saveAll(propsList));
     }
 
