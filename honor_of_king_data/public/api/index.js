@@ -1,7 +1,9 @@
 import axios from 'axios'
 
-let http = axios.create({
-    baseurl:'api',
-    timeout:1000
-})
-
+export const getHeroList = (params) =>{
+    return axios({
+        url:'',
+        method:'get',
+        param:params
+    })
+}

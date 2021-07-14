@@ -1,7 +1,32 @@
 <template>
   <el-container>
     <el-header>Header</el-header>
-    <el-main>Main</el-main>
+    <el-main>
+      <el-table
+          :data="tableData"
+          style="width: 100%"
+          :row-class-name="tableRowClassName">
+        <el-table-column
+            prop="id"
+            label="id"
+            width="180">
+        </el-table-column>
+        <el-table-column
+            prop="name"
+            label="英雄名称"
+            width="180">
+        </el-table-column>
+        <el-table-column
+            prop="detail"
+            label="描述">
+        </el-table-column>
+      </el-table>
+    </el-main>
+    <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="1000">
+    </el-pagination>
     <el-footer>Footer</el-footer>
   </el-container>
 
@@ -10,6 +35,7 @@
 </template>
 
 <script>
+
 export default {
   name: "index"
 }
@@ -48,5 +74,13 @@ body > .el-container {
 
 .el-container:nth-child(7) .el-aside {
   line-height: 320px;
+}
+
+.el-table .warning-row {
+  background: oldlace;
+}
+
+.el-table .success-row {
+  background: #f0f9eb;
 }
 </style>
