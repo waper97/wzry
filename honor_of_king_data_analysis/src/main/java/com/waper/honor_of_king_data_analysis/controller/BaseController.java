@@ -1,15 +1,10 @@
 package com.waper.honor_of_king_data_analysis.controller;
 
 import com.waper.honor_of_king_data_analysis.model.BaseInfo;
-//import com.waper.honor_of_king_data_analysis.service.WmMapperingService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.usermodel.HSSFWorkbookFactory;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.*;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @ClassName BaseController
